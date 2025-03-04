@@ -1,28 +1,23 @@
-#define compiler
-CC = gcc 
+# Variables
+CC = gcc
+CFLAGS = -Wall -g
+SRC = SJF_Initial.c RR_Initial.c
+OBJ = $(SRC:.c=.o)
 
-#define compiler flags 
-CFLAGS = -Wall -Wextra -g 
+# Targets
+all: SJF_Initial RR_Initial
 
-#Target executable name 
-TARGET = main
+SJF_Initial: SJF_Initial.o
+	$(CC) $(CFLAGS) -o SJF_Initial SJF_Initial.o
 
-#source files 
-SRCS = main.c
+RR_Initial: RR_Initial.o
+	$(CC) $(CFLAGS) -o RR_Initial RR_Initial.o
 
-#object files 
-OBJS = $(SRCS:.c=.o)
-
-#default rule to build executable 
-all: $(TARGET)
-
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-
-#rule to compile source files into object files
-%.o: %.c 
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-#clean rule to remove compiled files 
-clean: 
-	rm -f $(TARGET) $(OBJS) 
+# Clean up
+clean:
+	rm -f $(OBJ) SJF_Initial RR_Initial
+
+
