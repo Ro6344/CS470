@@ -1,23 +1,23 @@
-# Variables
 CC = gcc
-CFLAGS = -Wall -g
-SRC = SJF_Initial.c RR_Initial.c
-OBJ = $(SRC:.c=.o)
+CFLAGS = -Wall -Wextra -std=c11
 
-# Targets
-all: SJF_Initial RR_Initial
+TARGET = Rocio_testFS
 
-SJF_Initial: SJF_Initial.o
-	$(CC) $(CFLAGS) -o SJF_Initial SJF_Initial.o
+OBJS = Rocio_libFS.o Rocio_testFS.o
+  
+all: $(TARGET)
 
-RR_Initial: RR_Initial.o
-	$(CC) $(CFLAGS) -o RR_Initial RR_Initial.o
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+Rocio_libFS.o: Rocio_libFS.c Rocio_libFS.h
+	$(CC) $(CFLAGS) -c Rocio_libFS.c
 
-# Clean up
+Rocio_testFS.o: Rocio_testFS.c Rocio_libFS.h
+	$(CC) $(CFLAGS) -c Rocio_testFS.c
+
 clean:
-	rm -f $(OBJ) SJF_Initial RR_Initial
+	rm -f $(TARGET) $(OBJS)
 
-
+run: $(TARGET)
+	./$(TARGET)
